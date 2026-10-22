@@ -80,9 +80,10 @@ npx eas-cli@latest build -p android --profile preview # build an installable APK
 
 Note: the app only works on the same network as the ESP32. Voice control through Sinric Pro works from anywhere.
 
-Diagram
-That's the rough layout of your setup, bro. Quick summary of what's going on:
+🔌 Wiring Diagram
 
-- ESP32 sends GPIO control signals to the relay's IN1–IN4 pins, and separate GPIO pins drive your 4 status LEDs (each through its own resistor) on the breadboard.
-- The 5V adapter powers the relay module's VCC + GND independently — this is the important bit, since relays (especially when switching real loads) can pull more current than the ESP32's onboard 5V/3.3V regulator can safely supply.
-- Important: the adapter's GND must still be tied to the ESP32's GND (common ground) even though it's a separate power source — otherwise the relay won't switch reliably when triggered from the ESP32.
+![Wiring diagram](esp32_relay_led_wiring_diagram.png)
+
+- The ESP32 sends GPIO control signals to the relay module's IN1–IN4 pins, and drives 4 status LEDs (each through its own resistor) on the breadboard.
+- The 5V adapter powers the relay module's VCC + GND independently, since the relay coils can draw more current than the ESP32's onboard regulator can safely supply.
+- The adapter's GND must be connected to the ESP32's GND (common ground), otherwise the relays won't switch reliably.
