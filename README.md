@@ -20,8 +20,9 @@ LEDs & 5Ω Resistors
 Breadboard & Jumper Cables
 
 💻 Software & Tech Stack
-Language: C++
+Language: C++ (firmware), JavaScript / React Native (mobile app)
 IDE: Arduino IDE
+Mobile App: React Native (Expo), built with EAS
 IoT Platform: Sinric Pro
 Voice Assistants: Amazon Alexa, Google Home
 Libraries: `WiFi.h`, `WebServer.h`, `SinricPro.h`, `SinricProSwitch.h`
@@ -53,6 +54,31 @@ Power the ESP32 via the 5V adapter and wait for it to connect.
 Web Control: Find the ESP32's local IP address (via the Arduino Serial Monitor) and enter it into any browser connected to the same hotspot.
 
 Voice Control: Discover the devices in your Alexa or Google Home app and use commands like: "Alexa, turn on the bedroom light."
+
+📲 Mobile App (Android)
+A companion phone app built with React Native (Expo), in the [`mobile-app/`](mobile-app) folder. It talks to the same local web server as the browser dashboard, so no firmware changes are needed.
+
+Features:
+- Asks for the ESP32's IP address on every launch (the setup is portable), prefilled with the last one used, and checks the connection before continuing
+- On/off switch for each of the 4 relays, plus All On / All Off
+- Relay names can be renamed and are saved on the phone
+- Syncs every 4 seconds, so changes made by Alexa / Google Home show up in the app
+- Shows whether the ESP32 is reachable
+
+Using the app:
+1. Install the APK on an Android phone.
+2. Connect the phone to the same hotspot / Wi-Fi as the ESP32.
+3. Open the app, enter the ESP32's IP address (from the Serial Monitor, or the hotspot's connected-devices list) and tap Connect.
+
+Building the app yourself:
+```
+cd mobile-app
+npm install
+npx expo start                                        # test with the Expo Go app
+npx eas-cli@latest build -p android --profile preview # build an installable APK in the cloud
+```
+
+Note: the app only works on the same network as the ESP32. Voice control through Sinric Pro works from anywhere.
 
 Diagram
 That's the rough layout of your setup, bro. Quick summary of what's going on:
